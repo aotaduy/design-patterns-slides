@@ -33,11 +33,47 @@
 
     + Entre clases
     + Entre objetos
+    ---
+      ```mermaid
+classDiagram
+    Animal <|-- Duck
+    Animal <|-- Fish
+    Animal <|-- Zebra
+    Animal : +int age
+    Animal : +String gender
+    Animal: +isMammal()
+    Animal: +mate()
+    class Duck{
+      +String beakColor
+      +swim()
+      +quack()
+    }
+    class Fish{
+      -int sizeInFeet
+      -canEat()
+    }
+    class Zebra{
+      +bool is_wild
+      +run()
+    }
 
     ---
     ## Polimorfismo
     La capacidad de diferentes objetos a responder al mismo mensaje de diferentes formas de acuerdo a los metodos que implementan.
-
+```js
+const anArray = new Array([1, 2, '100', true, false]);
+const aMap = new Map([
+['home', 100],
+['away', 200],
+]);
+const aSet = new Set([1, 2, '100', true, false]);
+anArray.forEach((element) => console.log(element.toString()));
+aMap.forEach((element) => console.log(element.toString()));
+aSet.forEach((element) => console.log(element.toString()));
+[anArray, aMap, aSet].forEach((eachCollection) =>
+    eachCollection.forEach((element) => console.log(element.toString()))
+);
+```
     ---
     ## Funciones de orden superior
 

@@ -9,7 +9,7 @@
     "build": "gulp build"
   },
   "author": {
-    "name": "Andres Otaduy Botas",
+    "name": "Andres Otaduy Botas"
   },
   "repository": {
     "url": "https://github.com/aotaduy/design-patterns-slides.git"
