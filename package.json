@@ -1,11 +1,7 @@
 {
-  "name": "reveal.js",
-  "version": "4.4.0",
-  "description": "The HTML Presentation Framework",
-  "homepage": "https://revealjs.com",
-  "subdomain": "revealjs",
-  "main": "dist/reveal.js",
-  "module": "dist/reveal.esm.js",
+  "name": "patrones-slñides",
+  "version": "1.0",
+  "description": "Slides para presentacion patrones",
   "license": "MIT",
   "scripts": {
     "test": "gulp test",
@@ -13,13 +9,10 @@
     "build": "gulp build"
   },
   "author": {
-    "name": "Hakim El Hattab",
-    "email": "hakim.elhattab@gmail.com",
-    "web": "https://hakim.se"
+    "name": "Andres Otaduy Botas",
   },
   "repository": {
-    "type": "git",
-    "url": "git://github.com/hakimel/reveal.js.git"
+    "url": "https://github.com/aotaduy/design-patterns-slides.git"
   },
   "engines": {
     "node": ">=10.0.0"
