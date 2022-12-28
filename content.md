@@ -298,6 +298,14 @@ menu.render()
   + Elementos del DOM
   + Arbol de componentes React / Angular
   + Arbol de componentes de cualquier UI
+---
+## Estructurales +
+
++ Bridge
++ Flyweight
++ Decorator
++ Facade
++ Proxy
 
 ---
 ## Comportamiento - Strategy
@@ -587,3 +595,15 @@ classDiagram
 + Pipe de un observable
 + Bubbling de eventos en el DOM
 + [Asegurados](https://dev.azure.com/sancristobalCTD/EdgETeam/_git/portalasegurado-web-autogestion?path=/src/app/shared/models/claim-group/abstract-claim-group-handler.ts&_a=contents&version=GBmaster)
+
+---
+## Comportamiento + 
+
++ Command
++ Iterator
++ Mediator
++ Memento
++ Observer
++ Visitor
++ Template Method
+
