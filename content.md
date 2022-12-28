@@ -5,7 +5,7 @@ Definicion
  Elementos reusables para resolver problemas comunes de sistemas.
 
 ---
-## No es un patrones de Diseño
+## No es un patron de Diseño
 
 + Aplicacion
 + Libreria
