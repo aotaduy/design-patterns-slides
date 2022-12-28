@@ -1,12 +1,22 @@
 ## Patrones de Diseño
-Elementos reusables de diseño para resolver problemas comunes de sistemas.
+
+Definicion
+
+ Elementos reusables para resolver problemas comunes de sistemas.
+
+---
+## No es un patrones de Diseño
+
++ Aplicacion
++ Libreria
++ Framework
+
 ---
 ## Conceptos relacionados
 
 + Herencia
 + Polimorfismo
-+ Funciones de orden superior
-+ SOLID
++ Principios SOLID
 
 ---
 ## Herencia
@@ -38,6 +48,29 @@ classDiagram
     }
 ```
 ---
+## Herencia de objetos
+```js
+const parent = {
+  value: 2,
+  method() {
+    return this.value + 1;
+  }
+};
+
+console.log('parent method', parent.method()); // 3
+
+const child = {
+  __proto__: parent,
+};
+console.log(child.method()); // 3
+
+child.value = 4; // assign the value 4 to the property 'value' on child.
+
+console.log('child method', child.method()); // 5
+
+```
+
+---
 ## Polimorfismo
 La capacidad de diferentes objetos a responder al mismo mensaje de diferentes formas de acuerdo a los metodos que implementan.
 ```js
@@ -54,41 +87,6 @@ aSet.forEach((element) => console.log(element.toString()));
 eachCollection.forEach((element) => console.log(element.toString()))
 );
 ```
-
----
-## Funciones de orden superior
-
-+ Funciones que toman otras funciones como parametro.
-```js
-const plusTen = (x) => x + 10;
-[2, 3, 6, 7].map(plusTen);
-const isBig = (x) => x > 1000;
-[2, 30000, 6, 7666].filter(isBig);
-const map2 = (collection, func) => {
-  const result = [];
-  for (let each of collection) {
-    result.push(func(each));
-  }
-  return result;
-};
-map2([2, 3, 6, 7], plusTen);
-map2([2, 3, 6, 7], (x) => x * x + 10);
-
-```
-
-+ Funciones que devuelven funciones como resultado.
-```js
-function plusCreator(x) {
-  return function(y) {
-    return x + y
-  }
-}
-const plusTen2 = plusCreator(10);
-const twice = f => x => f(f(x))
-plusTwenty = twice(plusTen2)
-        [2, 3, 6, 7].map(plusTwenty);
-
-```
 ---
   ## SOLID
 
@@ -97,17 +95,12 @@ plusTwenty = twice(plusTen2)
   + Liskov substitution
   + Interface segregation
   + Dependency Inversion
----
-## Patrones de Diseño
-
-Soluciones a problemas comunes que aparecen de forma repetida
-
-Elementos reusables de diseño.
 
 ---
 ## Patrones - Clasificación GoF
 
-  [Libro GoF](https://www.amazon.com/-/es/Gamma-Erich-ebook/dp/B000SEIBB8)
+  [Libro GoF](https://www.amazon.com/-/es/Gamma-Erich-ebook/dp/B000SEIBB8) - 
+  [Refactoring guru](https://refactoring.guru/es) - [c2](https://wiki.c2.com/?DesignPatterns)
 
   + Creacion
   + Estructurales
@@ -118,44 +111,23 @@ Elementos reusables de diseño.
   Permite tener una forma unificada y separada para crear objetos sin especificar directamente que clase se va a usar.
 
 ```js
-class Empresa extends Sector {
-  createMenu() {
-    return new MenuEmpresa(this);
-  }
-}
-class GranEmpresa extends Sector {
-  createMenu() {
-    return new MenuEmpresa(this);
-  }
-}
-class Individuo extends Sector {
-  createMenu() {
-    return new MenuIndividuo(this);
-  }
-}
-```
-factory con template
-```js
-class EmpresaFactory extends Sector {
-  getMenu() {
-    return new MenuEmpresa(this);
-  }
-}
-class GranEmpresa extends Sector {
-  getMenu() {
-    return new MenuEmpresa(this);
-  }
-}
-class Individuo extends Sector {
-  getMenu() {
-    return new MenuIndividuo(this);
-  }
-}
 class Sector {
   openMenu() {
     this.createMenu().open();
   }
 }
+
+class GranEmpresa extends Sector {
+  getMenu() {
+    return new MenuEmpresa(this);
+  }
+}
+class Individuo extends Sector {
+  getMenu() {
+    return new MenuIndividuo(this);
+  }
+}
+
 
 ```
 ---
@@ -179,13 +151,21 @@ class Singleton {
 
 ```
 ---
+
+## Creacionales + 
+
++ Abstract factory
++ Builder
++ Prototype
+---
+
 ## Estructurales - Adapter
 
 Se utiliza cuando tenemos que intercambiar entre dos clases que hacen lo mismo pero difieren en la interfaz.
 Tipicamente usado con librerias externas
 ```ts
 class CustomerListService {
-  getCustomers() {
+  getCustomersFromBackend() {
     return fetch("http://my-api.com/customers");
   }
 }
@@ -287,15 +267,31 @@ class Menu extends AbstractMenu {
   render() {
     const content = this.children.map((each) => each.render()).join(" ");
     return ` <div>${this.label}</div>
-                 <div>${content}<div>`;
+                 <div>${content}</div>`;
   }
   add(item) {
     this.children.push(item);
   }
 }
 
+const menu = new Menu('main')
+const submenu = new Menu('modules')
+submenu.add(new MenuItem('clientes'))
+submenu.add(new MenuItem('proveedores'))
+menu.add(new MenuItem('home'))
+menu.add(submenu)
 
+menu.render()
 ```
+```html
+<div>main</div>
+<a>home</a>
+<div>
+    <div>modules</div>
+    <div><a>clientes</a><a>proveedores</a></div>
+</div>
+```
+
 ---
 ## Composite - Ejemplos
 
@@ -307,7 +303,7 @@ class Menu extends AbstractMenu {
 ## Comportamiento - Strategy
 
 Permite modelar diferentes comportamientos alternativos o variantes en un proceso
-  Generalmente la stragy no tiene un estado y puede ser singleton
+  Generalmente la strategy no tiene un estado y puede ser singleton
 ```mermaid
 classDiagram
     Context <-- Client
@@ -464,6 +460,20 @@ classDiagram
 
 
 ```js
+class UserList {
+    state: AbstractState
+    setState(newState){
+        this.state = newState;
+        this.state.activate()
+  }
+  loadData() {
+        this.setState(new LoadingState(this))
+        this.service.getData().subscribe(
+            response => {this.data = response; this.setState(new LoadedState(this)) }),
+            error => this.setState(new ErrorState(this))
+        )
+  }
+}
 class AbstractState {
   context;
   activate(request) {}
@@ -479,26 +489,14 @@ class LoadingState extends AbstractState {
     return; //do nothing
   }
 }
-class ErrorState extends AbstractState {
-  activate() {
-    this.context.stopAnimation();
-
-    this.context.clearData();
-
-    this.context.showErrorModal();
-  }
-  message() {
-    return "Error";
-  }
-  loadData() {
-    this.context.loadData();
-  }
-}
 class LoadedState extends AbstractState {
   activate() {
     this.context.stopAnimation();
 
     this.context.showData();
+    if (this.context.data.isEmpty) {
+        this.context.setState(new EmptyState(this.context))
+    }
   }
   loadData() {
     this.context.loadData();
@@ -521,6 +519,22 @@ class EmptyState extends AbstractState {
     return "Loaded succesfully but no data";
   }
 }
+class ErrorState extends AbstractState {
+  activate() {
+    this.context.stopAnimation();
+
+    this.context.clearData();
+
+    this.context.showErrorModal();
+  }
+  message() {
+    return "Error";
+  }
+  loadData() {
+    this.context.loadData();
+  }
+}
+
 
 
 ```
